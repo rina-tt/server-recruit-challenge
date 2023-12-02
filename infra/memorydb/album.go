@@ -7,8 +7,8 @@ import (
 	//"errors"
 	"sync"
 
-	"github.com/pulse227/server-recruit-challenge-sample/model"
-	"github.com/pulse227/server-recruit-challenge-sample/repository"
+	"server-recruit-challenge-sample/model"
+	"server-recruit-challenge-sample/repository"
 )
 
 // sync.RWMutex を埋め込み、albumMap フィールドでアルバムデータを保持

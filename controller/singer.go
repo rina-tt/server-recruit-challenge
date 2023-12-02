@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/pulse227/server-recruit-challenge-sample/model"
-	"github.com/pulse227/server-recruit-challenge-sample/service"
+	"server-recruit-challenge-sample/model"
+	"server-recruit-challenge-sample/service"
 )
 
 // singerController 構造体は、service.SingerService インターフェースを持ち、歌手に関するHTTPリクエストを処理

@@ -1,4 +1,4 @@
-module github.com/pulse227/server-recruit-challenge-sample
+module server-recruit-challenge-sample
 
 go 1.19
 

@@ -5,8 +5,8 @@ package service // このファイルが service パッケージであること�
 import (
 	"context"
 
-	"github.com/pulse227/server-recruit-challenge-sample/model"
-	"github.com/pulse227/server-recruit-challenge-sample/repository"
+	"server-recruit-challenge-sample/model"
+	"server-recruit-challenge-sample/repository"
 )
 
 

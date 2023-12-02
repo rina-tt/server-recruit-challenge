@@ -6,7 +6,7 @@ package repository // このファイルが repository パッケージである�
 import (
 	"context"
 
-	"github.com/pulse227/server-recruit-challenge-sample/model"
+	"server-recruit-challenge-sample/model"
 )
 
 // SingerRepository インターフェース：歌手に関するデータの永続化と取得に必要な基本的なメソッドを定義
