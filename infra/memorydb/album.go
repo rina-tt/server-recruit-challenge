@@ -4,7 +4,7 @@ package memorydb
 
 import (
 	"context"
-	//"errors"
+	"errors"
 	"sync"
 
 	"server-recruit-challenge-sample/model"
@@ -46,30 +46,30 @@ func (r *albumRepository) GetAll(ctx context.Context) ([]*model.Album, error) {
 	return albums, nil
 }
 
-// // Get は歌手ADに対応する歌手データを取得する。読み取り用のロックを取得し、指定されたIDの歌手が存在しない場合はエラーを返す。
-// func (r *singerRepository) Get(ctx context.Context, id model.SingerID) (*model.Singer, error) {
-// 	r.RLock()
-// 	defer r.RUnlock()
+// Get はアルバムIDに対応するアルバムデータを取得する。読み取り用のロックを取得し、指定されたIDのアルバムが存在しない場合はエラーを返す。
+func (r *albumRepository) Get(ctx context.Context, id model.AlbumID) (*model.Album, error) {
+	r.RLock()
+	defer r.RUnlock()
 
-// 	singer, ok := r.singerMap[id]
-// 	if !ok {
-// 		return nil, errors.New("not found")
-// 	}
-// 	return singer, nil
-// }
+	album, ok := r.albumMap[id]
+	if !ok {
+		return nil, errors.New("not found")
+	}
+	return album, nil
+}
 
-// // Add は新しい歌手を追加する。書き込み用のロックを取得し、歌手を singerMap に追加する。
-// func (r *singerRepository) Add(ctx context.Context, singer *model.Singer) error {
-// 	r.Lock()
-// 	r.singerMap[singer.ID] = singer
-// 	r.Unlock()
-// 	return nil
-// }
+// Add は新しいアルバムを追加する。書き込み用のロックを取得し、歌手を albumMap に追加する。
+func (r *albumRepository) Add(ctx context.Context, album *model.Album) error {
+	r.Lock()
+	r.albumMap[album.ID] = album
+	r.Unlock()
+	return nil
+}
 
-// // Delete は指定された歌手IDに対応する歌手を削除する。書き込み用のロックを取得し、singerMap から指定されたIDの歌手を削除する
-// func (r *singerRepository) Delete(ctx context.Context, id model.SingerID) error {
-// 	r.Lock()
-// 	delete(r.singerMap, id)
-// 	r.Unlock()
-// 	return nil
-// }
+// Delete は指定されたアルバムIDに対応するアルバムを削除する。書き込み用のロックを取得し、albumMap から指定されたIDのアルバムを削除する
+func (r *albumRepository) Delete(ctx context.Context, id model.AlbumID) error {
+	r.Lock()
+	delete(r.albumMap, id)
+	r.Unlock()
+	return nil
+}

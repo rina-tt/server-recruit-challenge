@@ -48,7 +48,7 @@ func (r *singerRepository) GetAll(ctx context.Context) ([]*model.Singer, error) 
 	return singers, nil
 }
 
-// Get は歌手ADに対応する歌手データを取得する。読み取り用のロックを取得し、指定されたIDの歌手が存在しない場合はエラーを返す。
+// Get は歌手IDに対応する歌手データを取得する。読み取り用のロックを取得し、指定されたIDの歌手が存在しない場合はエラーを返す。
 func (r *singerRepository) Get(ctx context.Context, id model.SingerID) (*model.Singer, error) {
 	r.RLock()
 	defer r.RUnlock()

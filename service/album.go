@@ -13,9 +13,9 @@ import (
 // AlbumService はアルバム（Album）に関するサービスを提供するためのインターフェース
 type AlbumService interface {
 	GetAlbumListService(ctx context.Context) ([]*model.Album, error) // 一覧を取得する
-	//GetAlbumService(ctx context.Context, albumID model.AlbumID) (*model.Singer, error) // 取得する
-	//PostAlbumService(ctx context.Context, album *model.Album) error // 追加する
-	//DeleteAlbumService(ctx context.Context, albumID model.AlbumID) error // 削除する
+	GetAlbumService(ctx context.Context, albumID model.AlbumID) (*model.Album, error) // 取得する
+	PostAlbumService(ctx context.Context, album *model.Album) error // 追加する
+	DeleteAlbumService(ctx context.Context, albumID model.AlbumID) error // 削除する
 }
 
 
@@ -48,29 +48,29 @@ func (s *albumService) GetAlbumListService(ctx context.Context) ([]*model.Album,
 }
 
 
-// // 指定された歌手IDに対応する歌手（Singer）を取得するサービスメソッド
-// func (s *singerService) GetSingerService(ctx context.Context, singerID model.SingerID) (*model.Singer, error) {
-// 	singer, err := s.singerRepository.Get(ctx, singerID) // repository/singer.go ファイルの Get メソッドを呼び出す
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return singer, nil
-// }
+// 指定されたアルバムIDに対応するアルバム（Album）を取得するサービスメソッド
+func (s *albumService) GetAlbumService(ctx context.Context, albumID model.AlbumID) (*model.Album, error) {
+	album, err := s.albumRepository.Get(ctx, albumID) // repository/album.go ファイルの Get メソッドを呼び出す
+	if err != nil {
+		return nil, err
+	}
+	return album, nil
+}
 
 
-// // 新しい歌手（Singer）を追加するサービスメソッド
-// func (s *singerService) PostSingerService(ctx context.Context, singer *model.Singer) error {
-// 	if err := s.singerRepository.Add(ctx, singer); err != nil { // repository/singer.go ファイルの Add メソッドを呼び出す
-// 		return err
-// 	}
-// 	return nil
-// }
+// 新しいアルバム（Album）を追加するサービスメソッド
+func (s *albumService) PostAlbumService(ctx context.Context, album *model.Album) error {
+	if err := s.albumRepository.Add(ctx, album); err != nil { // repository/album.go ファイルの Add メソッドを呼び出す
+		return err
+	}
+	return nil
+}
 
 
-// // 指定された歌手IDに対応する歌手（Singer）を削除するサービスメソッド
-// func (s *singerService) DeleteSingerService(ctx context.Context, singerID model.SingerID) error {
-// 	if err := s.singerRepository.Delete(ctx, singerID); err != nil { // repository/singer.go ファイルの Delete メソッドを呼び出す
-// 		return err
-// 	}
-// 	return nil
-// }
+// 指定されたアルバムIDに対応するアルバム（Album）を削除するサービスメソッド
+func (s *albumService) DeleteAlbumService(ctx context.Context, albumID model.AlbumID) error {
+	if err := s.albumRepository.Delete(ctx, albumID); err != nil { // repository/album.go ファイルの Delete メソッドを呼び出す
+		return err
+	}
+	return nil
+}

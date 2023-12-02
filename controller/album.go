@@ -2,12 +2,12 @@ package controller
 
 import (
 	"encoding/json"
-	//"fmt"
+	"fmt"
 	"net/http"
-	//"strconv"
+	"strconv"
 
-	//"github.com/gorilla/mux"
-	//"server-recruit-challenge-sample/model"
+	"github.com/gorilla/mux"
+	"server-recruit-challenge-sample/model"
 	"server-recruit-challenge-sample/service"
 )
 
@@ -16,7 +16,7 @@ type albumController struct {
 	service service.AlbumService
 }
 
-// NewSingerController 関数：singerController インスタンスを作成して返す
+// NewAlbumController 関数：albumController インスタンスを作成して返す
 func NewAlbumController(s service.AlbumService) *albumController {
 	return &albumController{service: s}
 }
@@ -34,61 +34,62 @@ func (c *albumController) GetAlbumListHandler(w http.ResponseWriter, r *http.Req
 	json.NewEncoder(w).Encode(albums)
 }
 
-// // GET /singers/{id} のハンドラー
-// // GETリクエストを処理して歌手を取得し、JSON形式でレスポンスを返す
-// func (c *singerController) GetSingerDetailHandler(w http.ResponseWriter, r *http.Request) {
-// 	singerID, err := strconv.Atoi(mux.Vars(r)["id"]) // URLパラメータから歌手IDを取得
-// 	if err != nil {
-// 		err = fmt.Errorf("invalid path param: %w", err)
-// 		errorHandler(w, r, 400, err.Error())
-// 		return
-// 	}
+// GET /albums/{id} のハンドラー
+// GETリクエストを処理してアルバムを取得し、JSON形式でレスポンスを返す
+func (c *albumController) GetAlbumDetailHandler(w http.ResponseWriter, r *http.Request) {
+	albumID, err := strconv.Atoi(mux.Vars(r)["id"]) // URLパラメータからアルバムIDを取得
+	if err != nil {
+		err = fmt.Errorf("invalid path param: %w", err)
+		errorHandler(w, r, 400, err.Error())
+		return
+	}
 
-// 	// service/singer.go ファイルの GetSingerService メソッドを呼び出す
-// 	singer, err := c.service.GetSingerService(r.Context(), model.SingerID(singerID))
-// 	if err != nil {
-// 		errorHandler(w, r, 500, err.Error())
-// 		return
-// 	}
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(200)
-// 	json.NewEncoder(w).Encode(singer)
-// }
 
-// // POST /singers のハンドラー
-// // POSTリクエストを処理して歌手を登録し、JSON形式でレスポンスを返す
-// func (c *singerController) PostSingerHandler(w http.ResponseWriter, r *http.Request) {
-// 	var singer *model.Singer
-// 	if err := json.NewDecoder(r.Body).Decode(&singer); err != nil { // リクエストボディから歌手データを取得
-// 		err = fmt.Errorf("invalid body param: %w", err) // リクエストボディが不正な場合はエラーを返す
-// 		errorHandler(w, r, 400, err.Error())
-// 		return
-// 	}
+	// service/album.go ファイルの GetAlbumService メソッドを呼び出す
+	album, err := c.service.GetAlbumService(r.Context(), model.AlbumID(albumID))
+	if err != nil {
+		errorHandler(w, r, 500, err.Error())
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(album)
+}
 
-// 	if err := c.service.PostSingerService(r.Context(), singer); err != nil { // service/singer.go ファイルの PostSingerService メソッドを呼び出す
-// 		errorHandler(w, r, 500, err.Error())
-// 		return
-// 	}
+// POST /albums のハンドラー
+// POSTリクエストを処理してアルバムを登録し、JSON形式でレスポンスを返す
+func (c *albumController) PostAlbumHandler(w http.ResponseWriter, r *http.Request) {
+	var album *model.Album
+	if err := json.NewDecoder(r.Body).Decode(&album); err != nil { // リクエストボディからアルバムデータを取得
+		err = fmt.Errorf("invalid body param: %w", err) // リクエストボディが不正な場合はエラーを返す
+		errorHandler(w, r, 400, err.Error())
+		return
+	}
 
-// 	w.Header().Set("Content-Type", "application/json")
-// 	w.WriteHeader(200)
-// 	json.NewEncoder(w).Encode(singer)
-// }
+	if err := c.service.PostAlbumService(r.Context(), album); err != nil { // service/album.go ファイルの PostAlbumService メソッドを呼び出す
+		errorHandler(w, r, 500, err.Error())
+		return
+	}
 
-// // DELETE /singers/{id} のハンドラー
-// // DELETEリクエストを処理して歌手を削除する
-// func (c *singerController) DeleteSingerHandler(w http.ResponseWriter, r *http.Request) {
-// 	singerID, err := strconv.Atoi(mux.Vars(r)["id"]) // URLパラメータから歌手IDを取得
-// 	if err != nil {
-// 		err = fmt.Errorf("invalid path param: %w", err)
-// 		errorHandler(w, r, 400, err.Error())
-// 		return
-// 	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	json.NewEncoder(w).Encode(album)
+}
 
-// 	// service/singer.go ファイルの DeleteSingerService メソッドを呼び出す
-// 	if err := c.service.DeleteSingerService(r.Context(), model.SingerID(singerID)); err != nil {
-// 		errorHandler(w, r, 500, err.Error())
-// 		return
-// 	}
-// 	w.WriteHeader(204)
-// }
+// DELETE /albums/{id} のハンドラー
+// DELETEリクエストを処理してアルバムを削除する
+func (c *albumController) DeleteAlbumHandler(w http.ResponseWriter, r *http.Request) {
+	albumID, err := strconv.Atoi(mux.Vars(r)["id"]) // URLパラメータから歌手IDを取得
+	if err != nil {
+		err = fmt.Errorf("invalid path param: %w", err)
+		errorHandler(w, r, 400, err.Error())
+		return
+	}
+
+	// service/album.go ファイルの DeleteAlbumService メソッドを呼び出す
+	if err := c.service.DeleteAlbumService(r.Context(), model.AlbumID(albumID)); err != nil {
+		errorHandler(w, r, 500, err.Error())
+		return
+	}
+	w.WriteHeader(204)
+}

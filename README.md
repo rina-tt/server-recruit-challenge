@@ -61,7 +61,6 @@ curl http://localhost:8888/albums
 [{"id":1,"title":"Alice's 1st Album","singer_id":1},{"id":2,"title":"Alice's 2nd Album","singer_id":1},{"id":3,"title":"Bella's 1st Album","singer_id":2}]
 ```
 
-レスポンス結果をapi_log/get_albumsに格納
 ### 3-2
 指定したIDのアルバムを取得するAPI
 ```

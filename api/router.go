@@ -30,6 +30,9 @@ func NewRouter() *mux.Router {
 	r.HandleFunc("/singers/{id:[0-9]+}", singerController.DeleteSingerHandler).Methods(http.MethodDelete) // DELETE /singers/{id} のハンドラー
 
 	r.HandleFunc("/albums", albumController.GetAlbumListHandler).Methods(http.MethodGet) // GET /albums のハンドラー
+	r.HandleFunc("/albums/{id:[0-9]+}", albumController.GetAlbumDetailHandler).Methods(http.MethodGet) // GET /albums/{id} のハンドラー
+	r.HandleFunc("/albums", albumController.PostAlbumHandler).Methods(http.MethodPost) // POST /albums のハンドラー
+	r.HandleFunc("/albums/{id:[0-9]+}", albumController.DeleteAlbumHandler).Methods(http.MethodDelete) // DELETE /albums/{id} のハンドラー
 
 	r.Use(middleware.LoggingMiddleware) // ログ出力用のミドルウェアを適用
 
