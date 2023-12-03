@@ -53,7 +53,7 @@ api_logフォルダに格納
 アルバムを管理するAPIを新規作成しましょう。
 
 ### 3-1
-アルバムの一覧を取得するAPI
+アルバムの一覧を取得するAPI：実装＆確認済み
 ```
 curl http://localhost:8888/albums
 
@@ -62,7 +62,7 @@ curl http://localhost:8888/albums
 ```
 
 ### 3-2
-指定したIDのアルバムを取得するAPI
+指定したIDのアルバムを取得するAPI：実装＆確認済み
 ```
 curl http://localhost:8888/albums/1
 
@@ -71,7 +71,7 @@ curl http://localhost:8888/albums/1
 ```
 
 ### 3-3
-アルバムを追加するAPI
+アルバムを追加するAPI：実装＆確認済み
 ```
 curl -X POST -d '{"id":10,"title":"Chris 1st","singer_id":3}' http://localhost:8888/albums
 
@@ -83,7 +83,7 @@ curl http://localhost:8888/albums/10
 ```
 
 ### 3-4
-アルバムを削除するAPI
+アルバムを削除するAPI：実装＆確認済み
 ```
 curl -X DELETE http://localhost:8888/albums/1
 ```
@@ -113,3 +113,5 @@ curl http://localhost:8888/albums
 歌手とそのアルバムを管理するという点で、現状のAPIの改善点を検討し思いつく限り書き出してください。
 
 実装をする必要はありません。
+
+- 歌手が削除されたらその歌手のアルバムも削除されるようにする

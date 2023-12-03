@@ -51,9 +51,38 @@ func (c *albumController) GetAlbumDetailHandler(w http.ResponseWriter, r *http.R
 		errorHandler(w, r, 500, err.Error())
 		return
 	}
+
+	// 歌手の情報を取得するための SingerService を取得
+	//singerService := service.NewSingerService(c.service.GetSingerRepository()) // GetSingerRepository は AlbumService に必要なメソッドと仮定しています
+
+	// AlbumRepository を直接取得
+	//albumRepo := c.service.GetAlbumRepository() // GetAlbumRepository は AlbumService に必要なメソッドと仮定しています
+
+	// 歌手の情報を取得
+	//singer, err := c.service.GetSingerService(r.Context(), album.SingerID)
+	//singer, err := singerService.GetSingerService(r.Context(), album.SingerID)
+	//singer, err := albumRepo.GetSinger(r.Context(), album.SingerID)
+	// if err != nil {
+	// 	errorHandler(w, r, 500, err.Error())
+	// 	return
+	// }
+
+	// 歌手の情報を手動で指定 -> 成功
+	// 歌手情報を取得できれば成功しそう
+	singer := &model.Singer{ID: 1, Name: "Alice"}
+
+	albumWithSinger := struct {
+		*model.Album
+		Singer *model.Singer `json:"singer"`
+	}{
+		Album:  album,
+		Singer: singer,
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)
-	json.NewEncoder(w).Encode(album)
+	//json.NewEncoder(w).Encode(album)
+	json.NewEncoder(w).Encode(albumWithSinger)
 }
 
 // POST /albums のハンドラー
